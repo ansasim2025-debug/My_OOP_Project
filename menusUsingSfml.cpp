@@ -307,14 +307,14 @@ void SFMLApp::run()
 
                     else if (currentScreen == PATIENT_MENU)
                     {
-                        sf::RectangleShape btn1 = makeButton(387, 200, 250, 45, sf::Color(70, 130, 180));
-                        sf::RectangleShape btn2 = makeButton(387, 255, 250, 45, sf::Color(70, 130, 180));
-                        sf::RectangleShape btn3 = makeButton(387, 310, 250, 45, sf::Color(70, 130, 180));
-                        sf::RectangleShape btn4 = makeButton(387, 365, 250, 45, sf::Color(70, 130, 180));
-                        sf::RectangleShape btn5 = makeButton(387, 420, 250, 45, sf::Color(70, 130, 180));
-                        sf::RectangleShape btn6 = makeButton(387, 475, 250, 45, sf::Color(70, 130, 180));
-                        sf::RectangleShape btn7 = makeButton(387, 530, 250, 45, sf::Color(70, 130, 180));
-                        sf::RectangleShape btn8 = makeButton(387, 585, 250, 45, sf::Color(180, 70, 70));
+                        sf::RectangleShape btn1 = makeButton(387, 130, 250, 45, sf::Color(70, 130, 180));
+                        sf::RectangleShape btn2 = makeButton(387, 185, 250, 45, sf::Color(70, 130, 180));
+                        sf::RectangleShape btn3 = makeButton(387, 240, 250, 45, sf::Color(70, 130, 180));
+                        sf::RectangleShape btn4 = makeButton(387, 295, 250, 45, sf::Color(70, 130, 180));
+                        sf::RectangleShape btn5 = makeButton(387, 350, 250, 45, sf::Color(70, 130, 180));
+                        sf::RectangleShape btn6 = makeButton(387, 405, 250, 45, sf::Color(70, 130, 180));
+                        sf::RectangleShape btn7 = makeButton(387, 460, 250, 45, sf::Color(70, 130, 180));
+                        sf::RectangleShape btn8 = makeButton(387, 515, 250, 45, sf::Color(180, 70, 70));
 
                         if (isClicked(btn1, mousePos))
                         {
@@ -1251,8 +1251,8 @@ void SFMLApp::processEnter()
 
 void SFMLApp::drawLoginScreen()
 {
-    sf::Text title = makeText("MediCore Hospital", 280, 100, 36, sf::Color::White);
-    sf::Text subtitle = makeText("Management System", 300, 145, 28, sf::Color(200, 200, 200));
+    sf::Text title = makeText("MediCore Hospital", 345, 100, 36, sf::Color::White);
+    sf::Text subtitle = makeText("Management System", 350, 145, 28, sf::Color(200, 200, 200));
     sf::Text prompt = makeText("Login as:", 440, 250, 22, sf::Color(200, 200, 200));
 
     sf::RectangleShape btn1 = makeButton(387, 300, 250, 50, sf::Color(70, 130, 180));
@@ -1274,48 +1274,82 @@ void SFMLApp::drawLoginScreen()
 
 void SFMLApp::drawPatientMenu()
 {
-    // SHOW PATIENT NAME AND BALANCE AT TOP
+    sf::Text title = makeText("Patient Menu", 390, 20, 32, sf::Color::White);
+    window.draw(title);
+
     if (currentPatient != nullptr)
     {
-        char info[100] = "Welcome, ";
+        char welcome[100] = "Welcome, ";
         int i = 9;
         const char* name = currentPatient->getName();
         int j = 0;
-        while (name[j]) { info[i++] = name[j++]; }
-        info[i] = '\0';
-        sf::Text welcome = makeText(info, 50, 50, 20, sf::Color(70, 200, 130));
-        window.draw(welcome);
+        while (name[j]) { welcome[i++] = name[j++]; }
+        welcome[i] = '\0';
+
+        sf::Text welcomeText = makeText(welcome, 10, 60, 20, sf::Color(70, 200, 130));
+        window.draw(welcomeText);
+
+        char balStr[100] = "Balance: PKR ";
+        int pos = 13;
+        int bal = (int)currentPatient->getBalance();
+        char tmp[10];
+        int len = 0;
+        if (bal == 0)
+        {
+            balStr[pos++] = '0';
+        }
+        else
+        {
+            while (bal > 0) 
+            { 
+                tmp[len++] = '0' + bal % 10; bal /= 10; 
+            }
+
+            for (int x = len - 1; x >= 0; x--)
+            {
+                balStr[pos++] = tmp[x];
+            }
+        }
+        balStr[pos] = '\0';
+
+        sf::Text balText = makeText(balStr, 10, 85, 20, sf::Color(100, 200, 100));
+        window.draw(balText);
     }
 
-    sf::Text title = makeText("Patient Menu", 390, 100, 32, sf::Color::White);
+    sf::RectangleShape btn1 = makeButton(387, 130, 250, 45, sf::Color(70, 130, 180));
+    sf::RectangleShape btn2 = makeButton(387, 185, 250, 45, sf::Color(70, 130, 180));
+    sf::RectangleShape btn3 = makeButton(387, 240, 250, 45, sf::Color(70, 130, 180));
+    sf::RectangleShape btn4 = makeButton(387, 295, 250, 45, sf::Color(70, 130, 180));
+    sf::RectangleShape btn5 = makeButton(387, 350, 250, 45, sf::Color(70, 130, 180));
+    sf::RectangleShape btn6 = makeButton(387, 405, 250, 45, sf::Color(70, 130, 180));
+    sf::RectangleShape btn7 = makeButton(387, 460, 250, 45, sf::Color(70, 130, 180));
+    sf::RectangleShape btn8 = makeButton(387, 515, 250, 45, sf::Color(180, 70, 70));
 
-    sf::RectangleShape btn1 = makeButton(387, 200, 250, 45, sf::Color(70, 130, 180));
-    sf::RectangleShape btn2 = makeButton(387, 255, 250, 45, sf::Color(70, 130, 180));
-    sf::RectangleShape btn3 = makeButton(387, 310, 250, 45, sf::Color(70, 130, 180));
-    sf::RectangleShape btn4 = makeButton(387, 365, 250, 45, sf::Color(70, 130, 180));
-    sf::RectangleShape btn5 = makeButton(387, 420, 250, 45, sf::Color(70, 130, 180));
-    sf::RectangleShape btn6 = makeButton(387, 475, 250, 45, sf::Color(70, 130, 180));
-    sf::RectangleShape btn7 = makeButton(387, 530, 250, 45, sf::Color(70, 130, 180));
-    sf::RectangleShape btn8 = makeButton(387, 585, 250, 45, sf::Color(180, 70, 70));
+    sf::Text lbl1 = makeText("Book Appointment", 400, 142, 18, sf::Color::White);
+    sf::Text lbl2 = makeText("Cancel Appointment", 400, 197, 18, sf::Color::White);
+    sf::Text lbl3 = makeText("View Appointments", 400, 252, 18, sf::Color::White);
+    sf::Text lbl4 = makeText("View Medical Records", 400, 307, 18, sf::Color::White);
+    sf::Text lbl5 = makeText("View Bills", 400, 362, 18, sf::Color::White);
+    sf::Text lbl6 = makeText("Pay Bill", 400, 417, 18, sf::Color::White);
+    sf::Text lbl7 = makeText("Top Up Balance", 400, 472, 18, sf::Color::White);
+    sf::Text lbl8 = makeText("Logout", 400, 527, 18, sf::Color::White);
 
-    sf::Text lbl1 = makeText("Book Appointment", 400, 212, 18, sf::Color::White);
-    sf::Text lbl2 = makeText("Cancel Appointment", 400, 267, 18, sf::Color::White);
-    sf::Text lbl3 = makeText("View Appointments", 400, 322, 18, sf::Color::White);
-    sf::Text lbl4 = makeText("View Medical Records", 400, 377, 18, sf::Color::White);
-    sf::Text lbl5 = makeText("View Bills", 400, 432, 18, sf::Color::White);
-    sf::Text lbl6 = makeText("Pay Bill", 400, 487, 18, sf::Color::White);
-    sf::Text lbl7 = makeText("Top Up Balance", 400, 542, 18, sf::Color::White);
-    sf::Text lbl8 = makeText("Logout", 400, 597, 18, sf::Color::White);
-
-    window.draw(title);
-    window.draw(btn1); window.draw(lbl1);
-    window.draw(btn2); window.draw(lbl2);
-    window.draw(btn3); window.draw(lbl3);
-    window.draw(btn4); window.draw(lbl4);
-    window.draw(btn5); window.draw(lbl5);
-    window.draw(btn6); window.draw(lbl6);
-    window.draw(btn7); window.draw(lbl7);
-    window.draw(btn8); window.draw(lbl8);
+    window.draw(btn1);
+    window.draw(lbl1);
+    window.draw(btn2);
+    window.draw(lbl2);
+    window.draw(btn3);
+    window.draw(lbl3);
+    window.draw(btn4);
+    window.draw(lbl4);
+    window.draw(btn5);
+    window.draw(lbl5);
+    window.draw(btn6);
+    window.draw(lbl6);
+    window.draw(btn7);
+    window.draw(lbl7);
+    window.draw(btn8);
+    window.draw(lbl8);
 }
 
 void SFMLApp::drawDoctorMenu()
